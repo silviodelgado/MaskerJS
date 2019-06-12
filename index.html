@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Masked Input Fields</title>
+</head>
+
+<body>
+    <div>
+        <label>Brazil CPF: </label>
+        <input type="text" data-mask="cpf">
+    </div>
+    <div>
+        <label>Brazil CPF Pre-filled: </label>
+        <input type="text" data-mask="cpf" value="91827364564">
+    </div>
+    <hr>
+    <div>
+        <label>Brazil CNPJ: </label>
+        <input type="text" data-mask="cnpj">
+    </div>
+    <div>
+        <label>Brazil CNPJ Pre-filled: </label>
+        <input type="text" data-mask="cnpj" value="00000000074128">
+    </div>
+    <hr>
+    <div>
+        <label>Brazil CEP: </label>
+        <input type="text" data-mask="cep">
+    </div>
+    <div>
+        <label>Brazil CEP Pre-filled: </label>
+        <input type="text" data-mask="cep" value="25965360">
+    </div>
+    <hr>
+    <div>
+        <label>Phone: </label>
+        <input type="text" data-mask="phone">
+    </div>
+    <div>
+        <label>Brazil Phone Pre-filled: </label>
+        <input type="text" data-mask="phone" value="2123456789">
+    </div>
+    <div>
+        <label>Brazil Cellphone Pre-filled: </label>
+        <input type="text" data-mask="phone" value="21987654321">
+    </div>
+    <hr>
+    <div>
+        <label>Date: </label>
+        <input type="text" data-mask="date">
+    </div>
+    <div>
+        <label>Date Pre-filled: </label>
+        <input type="text" data-mask="date" value="06/08/1976">
+    </div>
+    <hr>
+    <div>
+        <label>Date / Time: </label>
+        <input type="text" data-mask="datetime">
+    </div>
+    <div>
+        <label>Date / Time Pre-filled: </label>
+        <input type="text" data-mask="datetime" value="06/08/1976 20:40">
+    </div>
+    <hr>
+    <div>
+        <label>Time: </label>
+        <input type="text" data-mask="time">
+    </div>
+    <div>
+        <label>Time Pre-filled: </label>
+        <input type="text" data-mask="time" value="20:40">
+    </div>
+    <hr>
+    <div>
+        <label>Monetary US: </label>
+        <input type="text" data-mask="money">
+    </div>
+    <div>
+        <label>Monetary US Pre-filled: </label>
+        <input type="text" data-mask="money" value="987654123456.78">
+    </div>
+    <hr>
+    <div>
+        <label>Monetary Brazil: </label>
+        <input type="text" data-mask="money" data-culture="pt-br">
+    </div>
+    <div>
+        <label>Monetary Brazil Pre-filled: </label>
+        <input type="text" data-mask="money" data-culture="pt-br" value="987654123456,78">
+    </div>
+    <div>
+        <label>Monetary Brazil Pre-filled: </label>
+        <input type="text" data-mask="money" data-culture="pt-br" value="87654123456,7">
+    </div>
+    <hr>
+    <div>
+        <label>Without mask: </label>
+        <input type="text">
+    </div>
+
+    <script src="masker.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            masker.init();
+        });
+    </script>
+</body>
+
+</html>
