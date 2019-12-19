@@ -17,5 +17,5 @@ Currently it supports following mask types:
 Add support to custom mask.
 
 ## Usage
-Se [index.html]() file included.
+Se [index.html](index.html) file included.
 
