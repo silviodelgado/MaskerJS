@@ -11,11 +11,11 @@ Currently it supports following mask types:
 * Date
 * Time
 * Datetime
-* Monetary (current Cultures: US and BR)
+* Monetary (current Cultures: en-US and pt-BR)
 
 ## Roadmap
 Add support to custom mask.
 
 ## Usage
-Se ```index.html``` file included.
+Se [index.html]() file included.
 
