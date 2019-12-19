@@ -1,9 +1,9 @@
 /*!
-Vanilla Javascript mask plugin to input form elements
-Author: Silvio Delgado - www.interart.com
-License: MIT
-https://github.com/silviodelgado/maskerjs
-*/
+  * MaskerJS v1.0 - Vanilla Javascript mask plugin to input form elements
+  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
+  * Licensed under MIT (https://opensource.org/licenses/MIT)
+  * https://github.com/silviodelgado/maskerjs
+  */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define([], factory(root));
@@ -79,10 +79,10 @@ https://github.com/silviodelgado/maskerjs
                 .replace(/(\:\d{2})\d+?$/, '$1');
         },
         money(target) {
-            var culture = target.dataset.culture || 'us';
+            var culture = target.dataset.culture || 'en-US';
             var value = target.value.replace(/\D/g, '');
             switch (culture) {
-                case 'pt-br':
+                case 'pt-BR':
                     value = value
                         .replace(/(\d{1, 2})$/, '$1')
                         .replace(/(\d+)(\d{2})/, '$1,$2')
