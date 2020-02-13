@@ -21,10 +21,10 @@
             str = str.replace(find, replace);
         }
         return str;
-    }
+    };
 
     const masks = {
-        cpf(target) {
+        cpf: function (target) {
             return target.value
                 .replace(/\D/g, '')
                 .replace(/(\d{3})(\d)/, '$1.$2')
@@ -32,7 +32,7 @@
                 .replace(/(\d{3})(\d{1,2})/, '$1-$2')
                 .replace(/(-\d{2})\d+?$/, '$1');
         },
-        cnpj(target) {
+        cnpj: function (target) {
             return target.value
                 .replace(/\D/g, '')
                 .replace(/(\d{2})(\d)/, '$1.$2')
@@ -41,29 +41,28 @@
                 .replace(/(\/\d{4})(\d{1,2})/, '$1-$2')
                 .replace(/(-\d{2})\d+?$/, '$1');
         },
-        cep(target) {
+        cep: function (target) {
             return target.value
                 .replace(/\D/g, '')
                 .replace(/(\d{5})(\d)/, '$1-$2')
                 .replace(/(-\d{3})\d+?$/, '$1');
         },
-        phone(target) {
-            var value = target.value.replace(/\D/g, '');
-            return value
+        phone: function (target) {
+            return target.value.replace(/\D/g, '')
                 .replace(/(\d{1,2})/, '($1')
                 .replace(/(\d{2})/, '$1) ')
                 .replace(/(\d{4})(\d{1,4})/, '$1-$2')
                 .replace(/(\d{4})-(\d)(\d{4})/, '$1$2-$3')
                 .replace(/(-\d{4})\d+?$/, '$1');
         },
-        date(target) {
+        date: function (target) {
             return target.value
                 .replace(/\D/g, '')
                 .replace(/(\d{2})(\d)/, '$1/$2')
                 .replace(/(\d{2})(\d{1,4})/, '$1/$2')
                 .replace(/(\/\d{4})\d+?$/, '$1');
         },
-        datetime(target) {
+        datetime: function (target) {
             return target.value
                 .replace(/\D/g, '')
                 .replace(/(\d{2})(\d)/, '$1/$2')
@@ -72,13 +71,13 @@
                 .replace(/(\d{4}) (\d{2})(\d{1,2})/, '$1 $2:$3')
                 .replace(/(\:\d{2})\d+?$/, '$1');
         },
-        time(target) {
+        time: function (target) {
             return target.value
                 .replace(/\D/g, '')
                 .replace(/(\d{2})(\d)/, '$1:$2')
                 .replace(/(\:\d{2})\d+?$/, '$1');
         },
-        money(target) {
+        money: function (target) {
             var culture = target.dataset.culture || 'en-US';
             var value = target.value.replace(/\D/g, '');
             switch (culture) {
@@ -97,15 +96,15 @@
             }
             return value;
         },
-        ccard(target) {
+        ccard: function (target) {
             return target.value
-            .replace(/\D/g, '')
-            .replace(/(\d{4})(\d)/, '$1 $2')
-            .replace(/( \d{4})(\d)/, '$1 $2')
-            .replace(/( \d{4})(\d)/, '$1 $2')
-            .replace(/( \d{4})(\d+?$)/, '$1 $2');
+                .replace(/\D/g, '')
+                .replace(/(\d{4})(\d)/, '$1 $2')
+                .replace(/( \d{4})(\d)/, '$1 $2')
+                .replace(/( \d{4})(\d)/, '$1 $2')
+                .replace(/( \d{4})(\d+?$)/, '$1 $2');
         }
-    }
+    };
 
     var init_component = function () {
         document.querySelectorAll('input').forEach(($elem) => {
@@ -116,10 +115,10 @@
                 e.target.value = masks[$elem.dataset.mask](e.target);
             });
         });
-    }
+    };
 
     return {
         init: init_component
-    }
+    };
 
 });
