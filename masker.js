@@ -78,22 +78,30 @@
                 .replace(/(\:\d{2})\d+?$/, '$1');
         },
         money: function (target) {
-            var culture = target.dataset.culture || 'en-US';
-            var value = target.value.replace(/\D/g, '');
-            switch (culture) {
-                case 'pt-BR':
-                    value = value
+            var culture = target.dataset.culture || 'en-us';
+            var firstTime = !(target.dataset.masked || false);
+            var value = target.value;
+            switch (culture.toLowerCase()) {
+                case 'pt-br':
+                    value = (firstTime
+                        ? parseFloat(target.value).toFixed(2).toString()
+                        : target.value.replace('.', '').replace(',', '.'))
+                        .replace(/\D/g, '')
                         .replace(/(\d{1, 2})$/, '$1')
                         .replace(/(\d+)(\d{2})/, '$1,$2')
                         .replaceAll(/(\d+)(\d{3})/, '$1.$2');
                     break;
                 default:
-                    value = value
+                    value = (firstTime
+                        ? parseFloat(target.value).toFixed(2).toString()
+                        : target.value.replace('.', '').replace(',', '.'))
+                        .replace(/\D/g, '')
                         .replace(/(\d{1, 2})$/, '$1')
                         .replace(/(\d+)(\d{2})/, '$1.$2')
                         .replaceAll(/(\d+)(\d{3})/, '$1,$2');
                     break;
             }
+            target.dataset.masked = true;
             return value;
         },
         ccard: function (target) {
