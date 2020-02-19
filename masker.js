@@ -84,8 +84,8 @@
             switch (culture.toLowerCase()) {
                 case 'pt-br':
                     value = (firstTime
-                        ? parseFloat(target.value).toFixed(2).toString()
-                        : target.value.replace('.', '').replace(',', '.'))
+                        ? parseFloat(value).toFixed(2).toString()
+                        : value.replace('.', '').replace(',', '.'))
                         .replace(/\D/g, '')
                         .replace(/(\d{1, 2})$/, '$1')
                         .replace(/(\d+)(\d{2})/, '$1,$2')
@@ -93,8 +93,8 @@
                     break;
                 default:
                     value = (firstTime
-                        ? parseFloat(target.value).toFixed(2).toString()
-                        : target.value.replace('.', '').replace(',', '.'))
+                        ? parseFloat(value).toFixed(2).toString()
+                        : value.replace('.', '').replace(',', '.'))
                         .replace(/\D/g, '')
                         .replace(/(\d{1, 2})$/, '$1')
                         .replace(/(\d+)(\d{2})/, '$1.$2')
