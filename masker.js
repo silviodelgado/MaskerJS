@@ -1,9 +1,9 @@
 /*!
-  * MaskerJS v1.0 - Vanilla Javascript mask plugin to input form elements
-  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
-  * Licensed under MIT (https://opensource.org/licenses/MIT)
-  * https://github.com/silviodelgado/maskerjs
-  */
+ * MaskerJS v1.0 - Vanilla Javascript mask plugin to input form elements
+ * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
+ * Licensed under MIT (https://opensource.org/licenses/MIT)
+ * https://github.com/silviodelgado/maskerjs
+*/
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define([], factory(root));
@@ -40,6 +40,12 @@
                 .replace(/(\d{3})(\d{1,4})/, '$1/$2')
                 .replace(/(\/\d{4})(\d{1,2})/, '$1-$2')
                 .replace(/(-\d{2})\d+?$/, '$1');
+        },
+        cpf_cnpj: function (target) {
+            if (target.value.length <= 14) {
+                return masks.cpf(target);
+            }
+            return masks.cnpj(target);
         },
         cep: function (target) {
             return target.value
@@ -111,6 +117,10 @@
                 .replace(/( \d{4})(\d)/, '$1 $2')
                 .replace(/( \d{4})(\d)/, '$1 $2')
                 .replace(/( \d{4})(\d+?$)/, '$1 $2');
+        },
+        number: function (target) {
+            return target.value
+                .replace(/\D/g, '');
         }
     };
 
