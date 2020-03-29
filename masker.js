@@ -77,6 +77,18 @@
                 .replace(/(\d{4}) (\d{2})(\d{1,2})/, '$1 $2:$3')
                 .replace(/(\:\d{2})\d+?$/, '$1');
         },
+        year_month: function (target) {
+            return target.value
+                .replace(/\D/g, '')
+                .replace(/(\d{4})(\d)/, '$1/$2')
+                .replace(/(\/\d{2})\d+?$/, '$1');
+        },
+        month_year: function (target) {
+            return target.value
+                .replace(/\D/g, '')
+                .replace(/(\d{2})(\d)/, '$1-$2')
+                .replace(/(\-\d{4})\d+?$/, '$1');
+        },
         time: function (target) {
             return target.value
                 .replace(/\D/g, '')
@@ -130,6 +142,11 @@
         number: function (target) {
             return target.value
                 .replace(/\D/g, '');
+        },
+        float: function (target) {
+            console.log('a', target.value);
+            return target.value
+                .replace(/[^0-9.,]/g, '')
         }
     };
 
