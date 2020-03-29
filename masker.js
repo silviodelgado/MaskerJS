@@ -17,7 +17,7 @@
 
     String.prototype.replaceAll = function (find, replace) {
         let str = this;
-        while (str.match(find)) {
+        while (str.indexOf(find) >= 0) {
             str = str.replace(find, replace);
         }
         return str;
@@ -86,27 +86,34 @@
         money: function (target) {
             let culture = target.dataset.culture || 'en-us';
             let firstTime = !(target.dataset.masked || false);
+            if (firstTime) {
+                document.querySelector('#' + target.id).setAttribute('maxlength', 18);
+            }
             let value = target.value;
             switch (culture.toLowerCase()) {
                 case 'pt-br':
-                    value = value.replaceAll('.', '').replace(',', '.');
                     value = (firstTime
                         ? parseFloat(value).toFixed(2).toString()
-                        : value)
+                        : value.replaceAll('.', '').replace(',', '.'))
                         .replace(/\D/g, '')
                         .replace(/(\d{1, 2})$/, '$1')
                         .replace(/(\d+)(\d{2})/, '$1,$2')
-                        .replaceAll(/(\d+)(\d{3})/, '$1.$2');
+                        .replace(/(\d+)(\d{3})/, '$1.$2')
+                        .replace(/(\d+)(\d{3})/, '$1.$2')
+                        .replace(/(\d+)(\d{3})/, '$1.$2')
+                        .replace(/(\d+)(\d{3})/, '$1.$2');
                     break;
                 default:
-                    value = value.replace(',', '');
                     value = (firstTime
                         ? parseFloat(value).toFixed(2).toString()
-                        : value)
+                        : value.replace(',', '.'))
                         .replace(/\D/g, '')
                         .replace(/(\d{1, 2})$/, '$1')
                         .replace(/(\d+)(\d{2})/, '$1.$2')
-                        .replaceAll(/(\d+)(\d{3})/, '$1,$2');
+                        .replace(/(\d+)(\d{3})/, '$1,$2')
+                        .replace(/(\d+)(\d{3})/, '$1,$2')
+                        .replace(/(\d+)(\d{3})/, '$1,$2')
+                        .replace(/(\d+)(\d{3})/, '$1,$2');
                     break;
             }
             target.dataset.masked = true;
