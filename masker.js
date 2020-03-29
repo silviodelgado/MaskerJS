@@ -16,7 +16,7 @@
     'use strict';
 
     String.prototype.replaceAll = function (find, replace) {
-        var str = this;
+        let str = this;
         while (str.match(find)) {
             str = str.replace(find, replace);
         }
@@ -84,23 +84,25 @@
                 .replace(/(\:\d{2})\d+?$/, '$1');
         },
         money: function (target) {
-            var culture = target.dataset.culture || 'en-us';
-            var firstTime = !(target.dataset.masked || false);
-            var value = target.value;
+            let culture = target.dataset.culture || 'en-us';
+            let firstTime = !(target.dataset.masked || false);
+            let value = target.value;
             switch (culture.toLowerCase()) {
                 case 'pt-br':
+                    value = value.replaceAll('.', '').replace(',', '.');
                     value = (firstTime
                         ? parseFloat(value).toFixed(2).toString()
-                        : value.replace('.', '').replace(',', '.'))
+                        : value)
                         .replace(/\D/g, '')
                         .replace(/(\d{1, 2})$/, '$1')
                         .replace(/(\d+)(\d{2})/, '$1,$2')
                         .replaceAll(/(\d+)(\d{3})/, '$1.$2');
                     break;
                 default:
+                    value = value.replace(',', '');
                     value = (firstTime
                         ? parseFloat(value).toFixed(2).toString()
-                        : value.replace('.', '').replace(',', '.'))
+                        : value)
                         .replace(/\D/g, '')
                         .replace(/(\d{1, 2})$/, '$1')
                         .replace(/(\d+)(\d{2})/, '$1.$2')
