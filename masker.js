@@ -144,9 +144,36 @@
                 .replace(/\D/g, '');
         },
         float: function (target) {
-            console.log('a', target.value);
             return target.value
                 .replace(/[^0-9.,]/g, '')
+        },
+        percent: function (target) {
+            let culture = target.dataset.culture || 'en-us';
+            let firstTime = !(target.dataset.masked || false);
+            if (firstTime) {
+                document.querySelector('#' + target.id).setAttribute('maxlength', 6);
+            }
+            let value = target.value;
+            switch (culture.toLowerCase()) {
+                case 'pt-br':
+                    value = (firstTime
+                        ? parseFloat(value).toFixed(2).toString()
+                        : value.replace(',', '.'))
+                        .replace(/\D/g, '')
+                        .replace(/(\d{1, 2})$/, '$1')
+                        .replace(/(\d{1,3})(\d{2})/, '$1,$2');
+                    break;
+                default:
+                    value = (firstTime
+                        ? parseFloat(value).toFixed(2).toString()
+                        : value)
+                        .replace(/\D/g, '')
+                        .replace(/(\d{1, 2})$/, '$1')
+                        .replace(/(\d{1,3})(\d{2})/, '$1.$2');
+                    break;
+            }
+            target.dataset.masked = true;
+            return value;
         }
     };
 
