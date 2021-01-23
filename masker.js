@@ -86,8 +86,8 @@
         month_year: function (target) {
             return target.value
                 .replace(/\D/g, '')
-                .replace(/(\d{2})(\d)/, '$1-$2')
-                .replace(/(\-\d{4})\d+?$/, '$1');
+                .replace(/(\d{2})(\d)/, '$1/$2')
+                .replace(/\/(\d{4})\d+?$/, '$1');
         },
         time: function (target) {
             return target.value
@@ -184,6 +184,9 @@
             $elem.value = masks[$elem.dataset.mask] ? masks[$elem.dataset.mask]($elem) : $elem.value;
             $elem.addEventListener('input', (e) => {
                 e.target.value = masks[$elem.dataset.mask](e.target);
+            });
+            $elem.addEventListener('focus', (e) => {
+                $elem.select();
             });
         });
     };
