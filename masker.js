@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.0 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.1 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -78,12 +78,14 @@
                 .replace(/(\:\d{2})\d+?$/, '$1');
         },
         year_month: function (target) {
+            if (target.value.length > 7) return target.value.substr(0, 7);
             return target.value
                 .replace(/\D/g, '')
                 .replace(/(\d{4})(\d)/, '$1/$2')
                 .replace(/(\/\d{2})\d+?$/, '$1');
         },
         month_year: function (target) {
+            if (target.value.length > 7) return target.value.substr(0, 7);
             return target.value
                 .replace(/\D/g, '')
                 .replace(/(\d{2})(\d)/, '$1/$2')
@@ -177,7 +179,7 @@
         }
     };
 
-    var init_component = function () {
+    const init_component = function () {
         document.querySelectorAll('input').forEach(($elem) => {
             if (!$elem.dataset.mask)
                 return false;
