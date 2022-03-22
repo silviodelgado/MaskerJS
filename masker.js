@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.1 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.2 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -134,12 +134,30 @@
             return value;
         },
         ccard: function (target) {
-            return target.value
-                .replace(/\D/g, '')
-                .replace(/(\d{4})(\d)/, '$1 $2')
-                .replace(/( \d{4})(\d)/, '$1 $2')
-                .replace(/( \d{4})(\d)/, '$1 $2')
-                .replace(/( \d{4})(\d+?$)/, '$1 $2');
+            let result = target.value.replace(/\D/g, '');
+            let first = result.length > 0 ? result.substr(0, 1) : '';
+            if (first == '') return '';
+            switch (first) {
+                case '4':
+                case '5':
+                    target.setAttribute('maxlength', 19);
+                    return result
+                        .replace(/(\d{4})(\d)/, '$1 $2')
+                        .replace(/( \d{4})(\d)/, '$1 $2')
+                        .replace(/( \d{4})(\d)/, '$1 $2')
+                        .replace(/( \d{4})(\d+?$)/, '$1 $2');
+                    break;
+                case '3':
+                    target.setAttribute('maxlength', 17);
+                    return result
+                        .replace(/(\d{4})(\d)/, '$1 $2')
+                        .replace(/( \d{6})(\d)/, '$1 $2')
+                        .replace(/( \d{5})(\d+?$)/, '$1 $2');
+                    break;
+                default:
+                    return result;
+            }
+
         },
         number: function (target) {
             return target.value
