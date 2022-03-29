@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.2 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.3 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -56,7 +56,8 @@
         phone: function (target) {
             return target.value.replace(/\D/g, '')
                 .replace(/(\d{1,2})/, '($1')
-                .replace(/(\d{2})/, '$1) ')
+                .replace(/(\d{2})/, '$1)')
+                .replace(/\((\d{2})\)(\d{1})/, '($1) $2')
                 .replace(/(\d{4})(\d{1,4})/, '$1-$2')
                 .replace(/(\d{4})-(\d)(\d{4})/, '$1$2-$3')
                 .replace(/(-\d{4})\d+?$/, '$1');
@@ -203,6 +204,10 @@
                 return false;
             $elem.value = masks[$elem.dataset.mask] ? masks[$elem.dataset.mask]($elem) : $elem.value;
             $elem.addEventListener('input', (e) => {
+                if (e.data == null && e.target.value != '') {
+                    e.target.value = e.target.value.substring(0, e.target.value.length);
+                    return;
+                }
                 e.target.value = masks[$elem.dataset.mask](e.target);
             });
             $elem.addEventListener('focus', (e) => {
