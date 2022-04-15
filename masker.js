@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.4 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.5 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -42,7 +42,8 @@
                 .replace(/(-\d{2})\d+?$/, '$1');
         },
         cpf_cnpj: function (target) {
-            if (target.value.replace(/\D/g, '').length < 14) {
+            let paste = target.value == target.value.replace(/\D/g, '');
+            if ((!paste && target.value.length <= 14) || (paste && target.value.length == 11)) {
                 return masks.cpf(target);
             }
             return masks.cnpj(target);
@@ -211,6 +212,9 @@
                 e.target.value = masks[$elem.dataset.mask](e.target);
             });
             $elem.addEventListener('blur', (e) => {
+                e.target.value = masks[$elem.dataset.mask](e.target);
+            });
+            $elem.addEventListener('keyup', (e) => {
                 e.target.value = masks[$elem.dataset.mask](e.target);
             });
             $elem.addEventListener('focus', (e) => {
