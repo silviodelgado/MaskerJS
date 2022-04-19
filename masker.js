@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.5 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.6 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -57,8 +57,7 @@
         phone: function (target) {
             return target.value.replace(/\D/g, '')
                 .replace(/(\d{1,2})/, '($1')
-                .replace(/(\d{2})/, '$1)')
-                .replace(/\((\d{2})\)(\d{1})/, '($1) $2')
+                .replace(/\((\d{2})(\d{1})/, '($1) $2')
                 .replace(/(\d{4})(\d{1,4})/, '$1-$2')
                 .replace(/(\d{4})-(\d)(\d{4})/, '$1$2-$3')
                 .replace(/(-\d{4})\d+?$/, '$1');
