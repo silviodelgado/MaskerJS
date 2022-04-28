@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.6 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.7 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -107,6 +107,7 @@
             let value = target.value;
             switch (culture.toLowerCase()) {
                 case 'pt-br':
+                    target.setAttribute('placeholder', '0,00');
                     value = (firstTime
                         ? parseFloat(value).toFixed(2).toString()
                         : value.replaceAll('.', '').replace(',', '.'))
@@ -119,6 +120,7 @@
                         .replace(/(\d+)(\d{3})/, '$1.$2');
                     break;
                 default:
+                    target.setAttribute('placeholder', '0.00');
                     value = (firstTime
                         ? parseFloat(value).toFixed(2).toString()
                         : value.replace(',', '.'))
@@ -177,6 +179,7 @@
             let value = target.value;
             switch (culture.toLowerCase()) {
                 case 'pt-br':
+                    target.setAttribute('placeholder', '0,00');
                     value = (firstTime
                         ? parseFloat(value).toFixed(2).toString()
                         : value.replace(',', '.'))
@@ -185,6 +188,7 @@
                         .replace(/(\d{1,3})(\d{2})/, '$1,$2');
                     break;
                 default:
+                    target.setAttribute('placeholder', '0.00');
                     value = (firstTime
                         ? parseFloat(value).toFixed(2).toString()
                         : value)
