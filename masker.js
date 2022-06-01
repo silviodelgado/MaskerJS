@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.7 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.8 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -168,7 +168,7 @@
         },
         float: function (target) {
             return target.value
-                .replace(/[^0-9.,]/g, '')
+                .replace(/[^\-0-9.,]/g, '')
         },
         percent: function (target) {
             let culture = target.dataset.culture || 'en-us';
