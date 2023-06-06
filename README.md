@@ -7,11 +7,17 @@ Currently it supports following mask types:
 * Brazilian CPF
 * Brazilian CNPJ
 * Brazilian CEP (zip code)
-* Phone numbers (with code area and 8 or 9 digits of number)
+* Phone numbers (with area code and 8 or 9 digits of number)
 * Date
 * Time
 * Datetime
+* Month/Year
+* Year/Month
 * Monetary (current Cultures: en-US and pt-BR)
+* CreditCard (VISA, Mastercard, AMEX, Diners and Discover)
+* Number (pure)
+* Float
+* Percent
 
 ## Roadmap
 Add support to custom mask.
