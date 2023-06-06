@@ -1,9 +1,9 @@
 # MaskerJS
 Vanilla Javascript mask plugin to input form elements
 
-Super lightweight plugin to mask input form elements (<2kB minified).
+Super lightweight plugin to mask input form elements (<6kB minified).
 
-Currently it supports following mask types:
+It currently supports following mask types:
 * Brazilian CPF
 * Brazilian CNPJ
 * Brazilian CEP (zip code)
@@ -23,5 +23,5 @@ Currently it supports following mask types:
 Add support to custom mask.
 
 ## Usage
-Se [index.html](index.html) file included.
+Se [index.html](index.html) file included (playground).
 
