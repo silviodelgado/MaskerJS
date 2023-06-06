@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.8 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.9 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -102,9 +102,17 @@
             let culture = target.dataset.culture || 'en-us';
             let firstTime = !(target.dataset.masked || false);
             if (firstTime) {
-                document.querySelector('#' + target.id).setAttribute('maxlength', 18);
+                target.setAttribute('maxlength', 18);
             }
             let value = target.value;
+            while (value.length > 0 && (value.substring(0, 1) == '0' || value.substring(0, 1) == '.' || value.substring(0, 1) == ',')) {
+                value = value.substring(1);
+            }
+            if (value.length == 1) {
+                value = '0.0' + value;
+            } else if (value.length == 2) {
+                value = '0.' + value;
+            }
             switch (culture.toLowerCase()) {
                 case 'pt-br':
                     target.setAttribute('placeholder', '0,00');
@@ -149,14 +157,27 @@
                         .replace(/( \d{4})(\d)/, '$1 $2')
                         .replace(/( \d{4})(\d)/, '$1 $2')
                         .replace(/( \d{4})(\d+?$)/, '$1 $2');
-                    break;
                 case '3':
-                    target.setAttribute('maxlength', 17);
-                    return result
-                        .replace(/(\d{4})(\d)/, '$1 $2')
-                        .replace(/( \d{6})(\d)/, '$1 $2')
-                        .replace(/( \d{5})(\d+?$)/, '$1 $2');
-                    break;
+                    let second = result.length > 1 ? result.substr(1, 1) : '';
+                    if (second == '') return result;
+                    switch (second) {
+                        case '6':
+                        case '8':
+                            target.setAttribute('maxlength', 16);
+                            return result
+                                .replace(/(\d{4})(\d)/, '$1 $2')
+                                .replace(/( \d{6})(\d)/, '$1 $2')
+                                .replace(/( \d{4})(\d+?$)/, '$1 $2');
+                        case '4':
+                        case '7':
+                            target.setAttribute('maxlength', 17);
+                            return result
+                                .replace(/(\d{4})(\d)/, '$1 $2')
+                                .replace(/( \d{6})(\d)/, '$1 $2')
+                                .replace(/( \d{5})(\d+?$)/, '$1 $2');
+                        default:
+                            return result;
+                    }
                 default:
                     return result;
             }
