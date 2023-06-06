@@ -151,6 +151,7 @@
             switch (first) {
                 case '4':
                 case '5':
+                case '6':
                     target.setAttribute('maxlength', 19);
                     return result
                         .replace(/(\d{4})(\d)/, '$1 $2')
@@ -195,9 +196,17 @@
             let culture = target.dataset.culture || 'en-us';
             let firstTime = !(target.dataset.masked || false);
             if (firstTime) {
-                document.querySelector('#' + target.id).setAttribute('maxlength', 6);
+                target.setAttribute('maxlength', 6);
             }
             let value = target.value;
+            while (value.length > 0 && (value.substring(0, 1) == '0' || value.substring(0, 1) == '.' || value.substring(0, 1) == ',')) {
+                value = value.substring(1);
+            }
+            if (value.length == 1) {
+                value = '0.0' + value;
+            } else if (value.length == 2) {
+                value = '0.' + value;
+            }
             switch (culture.toLowerCase()) {
                 case 'pt-br':
                     target.setAttribute('placeholder', '0,00');
