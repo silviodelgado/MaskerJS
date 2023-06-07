@@ -14,7 +14,7 @@ It currently supports the following mask types:
 * Month/Year
 * Year/Month
 * Monetary (current Cultures: en-US and pt-BR)
-* CreditCard (VISA, Mastercard, AMEX, Diners and Discover)
+* CreditCard (VISA, Mastercard, AMEX, Diners, Discover, Hipercard and Aura)
 * Number (pure)
 * Float
 * Percent
