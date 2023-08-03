@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.9 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.10 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -79,14 +79,14 @@
                 .replace(/(\:\d{2})\d+?$/, '$1');
         },
         year_month: function (target) {
-            if (target.value.length > 7) return target.value.substr(0, 7);
+            if (target.value.length > 7) return target.value.substring(0, 7);
             return target.value
                 .replace(/\D/g, '')
                 .replace(/(\d{4})(\d)/, '$1/$2')
                 .replace(/(\/\d{2})\d+?$/, '$1');
         },
         month_year: function (target) {
-            if (target.value.length > 7) return target.value.substr(0, 7);
+            if (target.value.length > 7) return target.value.substring(0, 7);
             return target.value
                 .replace(/\D/g, '')
                 .replace(/(\d{2})(\d)/, '$1/$2')
@@ -146,7 +146,7 @@
         },
         ccard: function (target) {
             let result = target.value.replace(/\D/g, '');
-            let first = result.length > 0 ? result.substr(0, 1) : '';
+            let first = result.length > 0 ? result.substring(0, 1) : '';
             if (first == '') return '';
             switch (first) {
                 case '4':
@@ -159,7 +159,7 @@
                         .replace(/( \d{4})(\d)/, '$1 $2')
                         .replace(/( \d{4})(\d+?$)/, '$1 $2');
                 case '3':
-                    let second = result.length > 1 ? result.substr(1, 1) : '';
+                    let second = result.length > 1 ? result.substring(1, 1) : '';
                     if (second == '') return result;
                     switch (second) {
                         case '6':
