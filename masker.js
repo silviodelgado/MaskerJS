@@ -1,6 +1,6 @@
 /*!
- * MaskerJS v1.10 - Vanilla Javascript mask plugin to input form elements
- * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
+ * MaskerJS v1.20 - Vanilla Javascript mask plugin to input form elements
+ * Copyright 2019-2023 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
 */
@@ -194,40 +194,48 @@
         },
         percent: function (target) {
             let culture = target.dataset.culture || 'en-us';
+            let precision = parseInt(target.dataset.precision || '2');
             let firstTime = !(target.dataset.masked || false);
             if (firstTime) {
-                target.setAttribute('maxlength', 6);
+                target.setAttribute('maxlength', (4 + precision));
             }
             let value = target.value;
             while (value.length > 0 && (value.substring(0, 1) == '0' || value.substring(0, 1) == '.' || value.substring(0, 1) == ',')) {
                 value = value.substring(1);
             }
-            if (value.length == 1) {
-                value = '0.0' + value;
-            } else if (value.length == 2) {
-                value = '0.' + value;
+
+            while (value.length > 0 && value.length <= precision) {
+                value = '0.' + value.padStart(precision, '0');
             }
+
+            let regex1 = new RegExp('(\\d{1,' + precision + '})$');
+            let regex2 = new RegExp('(\\d{1,3})(\\d{' + precision + '})');
             switch (culture.toLowerCase()) {
                 case 'pt-br':
-                    target.setAttribute('placeholder', '0,00');
+                    target.setAttribute('placeholder', '0,' + '0'.padEnd(precision, '0'));
                     value = (firstTime
-                        ? parseFloat(value).toFixed(2).toString()
+                        ? parseFloat(value).toFixed(precision).toString()
                         : value.replace(',', '.'))
                         .replace(/\D/g, '')
-                        .replace(/(\d{1, 2})$/, '$1')
-                        .replace(/(\d{1,3})(\d{2})/, '$1,$2');
+                        .replace(regex1, '$1')
+                        .replace(regex2, '$1,$2');
                     break;
                 default:
-                    target.setAttribute('placeholder', '0.00');
+                    target.setAttribute('placeholder', '0.' + '0'.padEnd(precision, '0'));
                     value = (firstTime
-                        ? parseFloat(value).toFixed(2).toString()
+                        ? parseFloat(value).toFixed(precision).toString()
                         : value)
                         .replace(/\D/g, '')
-                        .replace(/(\d{1, 2})$/, '$1')
-                        .replace(/(\d{1,3})(\d{2})/, '$1.$2');
+                        .replace(regex1, '$1')
+                        .replace(regex2, '$1.$2');
                     break;
             }
             target.dataset.masked = true;
+            
+            if (parseFloat(value) > 100) {
+                value = value.substring(0, value.length - 1);
+            }
+
             return value;
         }
     };
