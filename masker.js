@@ -101,9 +101,7 @@
         money: function (target) {
             let culture = target.dataset.culture || 'en-us';
             let firstTime = !(target.dataset.masked || false);
-            if (firstTime) {
-                target.setAttribute('maxlength', 18);
-            }
+            target.setAttribute('maxlength', 18);
             let value = target.value;
             while (value.length > 0 && (value.substring(0, 1) == '0' || value.substring(0, 1) == '.' || value.substring(0, 1) == ',')) {
                 value = value.substring(1);
@@ -196,18 +194,14 @@
             let culture = target.dataset.culture || 'en-us';
             let precision = parseInt(target.dataset.precision || '2');
             let firstTime = !(target.dataset.masked || false);
-            if (firstTime) {
-                target.setAttribute('maxlength', (4 + precision));
-            }
+            target.setAttribute('maxlength', (4 + precision));
             let value = target.value;
             while (value.length > 0 && (value.substring(0, 1) == '0' || value.substring(0, 1) == '.' || value.substring(0, 1) == ',')) {
                 value = value.substring(1);
             }
-
             while (value.length > 0 && value.length <= precision) {
                 value = '0.' + value.padStart(precision, '0');
             }
-
             let regex1 = new RegExp('(\\d{1,' + precision + '})$');
             let regex2 = new RegExp('(\\d{1,3})(\\d{' + precision + '})');
             switch (culture.toLowerCase()) {
@@ -231,11 +225,9 @@
                     break;
             }
             target.dataset.masked = true;
-            
             if (parseFloat(value) > 100) {
                 value = value.substring(0, value.length - 1);
             }
-
             return value;
         }
     };
