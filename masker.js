@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.21 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.22 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019-2024 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -194,6 +194,7 @@
             let culture = target.dataset.culture || 'en-us';
             let precision = parseInt(target.dataset.precision || '2');
             let firstTime = !(target.dataset.masked || false);
+            let maxValue = parseFloat(target.dataset.max || '100.00');
             target.setAttribute('maxlength', (4 + precision));
             let value = target.value;
             while (value.length > 0 && (value.substring(0, 1) == '0' || value.substring(0, 1) == '.' || value.substring(0, 1) == ',')) {
@@ -228,7 +229,7 @@
             let val = parseFloat(value.replace(/\D/g, '')
                             .replace(regex1, '$1')
                             .replace(regex2, '$1.$2'));
-            if (val > 100) {
+            if (val > maxValue) {
                 value = value.substring(0, value.length - 1);
             }
             return value;
