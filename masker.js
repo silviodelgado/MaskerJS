@@ -1,6 +1,6 @@
 /*!
- * MaskerJS v1.20 - Vanilla Javascript mask plugin to input form elements
- * Copyright 2019-2023 Silvio Delgado (https://github.com/silviodelgado)
+ * MaskerJS v1.21 - Vanilla Javascript mask plugin to input form elements
+ * Copyright 2019-2024 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
 */
@@ -225,7 +225,10 @@
                     break;
             }
             target.dataset.masked = true;
-            if (parseFloat(value) > 100) {
+            let val = parseFloat(value.replace(/\D/g, '')
+                            .replace(regex1, '$1')
+                            .replace(regex2, '$1.$2'));
+            if (val > 100) {
                 value = value.substring(0, value.length - 1);
             }
             return value;
