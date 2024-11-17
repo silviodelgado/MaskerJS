@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.22 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.3 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019-2024 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -41,12 +41,30 @@
                 .replace(/(\/\d{4})(\d{1,2})/, '$1-$2')
                 .replace(/(-\d{2})\d+?$/, '$1');
         },
+        cnpj_alpha: function (target) {
+            return target.value
+                .replace(/[^A-Za-z0-9]/gi, '')
+                .replace(/([A-Za-z0-9]{2})([A-Za-z0-9])/, '$1.$2')
+                .replace(/([A-Za-z0-9]{3})([A-Za-z0-9])/, '$1.$2')
+                .replace(/([A-Za-z0-9]{3})([A-Za-z0-9]{1,4})/, '$1/$2')                
+                .replace(/(\/[A-Za-z0-9]{4})([A-Za-z]{1,2})/, '$1-')
+                .replace(/(\/[A-Za-z0-9]{4})([0-9]{1,2})/, '$1-$2')
+                .replace(/(\-[0-9]{1,2})(.*)?$/, '$1')
+        },
         cpf_cnpj: function (target) {
             let paste = target.value == target.value.replace(/\D/g, '');
             if ((!paste && target.value.length <= 14) || (paste && target.value.length == 11)) {
                 return masks.cpf(target);
             }
             return masks.cnpj(target);
+        },
+        cpf_cnpj_alpha: function (target) {
+            let paste = target.value == target.value.replace(/[^A-Za-z0-9]/gi, '');
+            let alphanum = target.value.match(/[A-Za-z]/gi);
+            if ((!alphanum) && ((!paste && target.value.length <= 14) || (paste && target.value.length == 11))) {
+                return masks.cpf(target);
+            }
+            return masks.cnpj_alpha(target);
         },
         cep: function (target) {
             return target.value

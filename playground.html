@@ -28,6 +28,15 @@
     </div>
     <hr>
     <div>
+        <label>Brazil CNPJ Alphanumeric: </label>
+        <input type="text" data-mask="cnpj_alpha">
+    </div>
+    <div>
+        <label>Brazil CNPJ Alphanumeric Pre-filled: </label>
+        <input type="text" data-mask="cnpj_alpha" value="00AB1CD20EF128">
+    </div>
+    <hr>
+    <div>
         <label>Brazil CPF/CNPJ: </label>
         <input type="text" data-mask="cpf_cnpj">
     </div>
@@ -38,6 +47,19 @@
     <div>
         <label>Brazil CPF/CNPJ Pre-filled with CNPJ: </label>
         <input type="text" data-mask="cpf_cnpj" value="00000000074128">
+    </div>
+    <hr>
+    <div>
+        <label>Brazil CPF/CNPJ Alphanumeric: </label>
+        <input type="text" data-mask="cpf_cnpj_alpha">
+    </div>
+    <div>
+        <label>Brazil CPF/CNPJ Alphanumeric Pre-filled with CPF: </label>
+        <input type="text" data-mask="cpf_cnpj_alpha" value="91827364564">
+    </div>
+    <div>
+        <label>Brazil CPF/CNPJ Alphanumeric Pre-filled with CNPJ: </label>
+        <input type="text" data-mask="cpf_cnpj_alpha" value="00AB1CD20EF128">
     </div>
     <hr>
     <div>
@@ -175,7 +197,7 @@
         <input type="text">
     </div>
 
-    <script src="../masker.js"></script>
+    <script src="masker.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             Masker.init();

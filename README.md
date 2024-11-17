@@ -23,5 +23,5 @@ It currently supports the following mask types:
 Add support to custom mask.
 
 ## Usage
-Se [index.html](index.html) file included (playground).
+Se [playground.html](playground.html) file included.
 
