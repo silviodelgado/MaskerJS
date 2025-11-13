@@ -208,6 +208,49 @@
             return target.value
                 .replace(/[^\-0-9.,]/g, '')
         },
+        float_plus: function (target) {
+            let culture = target.dataset.culture || 'en-us';
+            let precision = parseInt(target.dataset.precision || '2');
+            let firstTime = !(target.dataset.masked || false);            
+            let value = target.value;
+            while (value.length > 0 && (value.substring(0, 1) == '0' || value.substring(0, 1) == '.' || value.substring(0, 1) == ',')) {
+                value = value.substring(1);
+            }
+            while (value.length > 0 && value.length <= precision) {
+                value = '0.' + value.padStart(precision, '0');
+            }
+            let regex1 = new RegExp('(\\d{1,' + precision + '})$');
+            let regex2 = new RegExp('(\\d{1,})(\\d{' + precision + '})');
+            let regex3 = new RegExp('(\\d{1,})(\\d{3})([\.\,])(\\d{' + precision + '})');
+            let regex4 = new RegExp('(\\d{1,})(\\d{3})([\.\,])(\\d{3})([\.\,])(\\d{' + precision + '})');
+            
+            switch (culture.toLowerCase()) {
+                case 'pt-br':
+                    target.setAttribute('placeholder', '0,' + '0'.padEnd(precision, '0'));
+                    value = (firstTime
+                        ? parseFloat(value).toFixed(precision).toString()
+                        : value.replace(',', '.'))
+                        .replace(/\D/g, '')
+                        .replace(regex1, '$1')
+                        .replace(regex2, '$1,$2')
+                        .replace(regex3, '$1.$2$3$4')
+                        .replace(regex4, '$1.$2$3$4$5$6');
+                    break;
+                default:
+                    target.setAttribute('placeholder', '0.' + '0'.padEnd(precision, '0'));
+                    value = (firstTime
+                        ? parseFloat(value).toFixed(precision).toString()
+                        : value)
+                        .replace(/\D/g, '')
+                        .replace(regex1, '$1')
+                        .replace(regex2, '$1.$2')
+                        .replace(regex3, '$1,$2$3$4')
+                        .replace(regex4, '$1,$2$3$4$5$6');
+                    break;
+            }
+            target.dataset.masked = true;
+            return value;
+        },
         percent: function (target) {
             let culture = target.dataset.culture || 'en-us';
             let precision = parseInt(target.dataset.precision || '2');
