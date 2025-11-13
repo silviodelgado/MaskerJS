@@ -1,6 +1,6 @@
 /*!
- * MaskerJS v1.3 - Vanilla Javascript mask plugin to input form elements
- * Copyright 2019-2024 Silvio Delgado (https://github.com/silviodelgado)
+ * MaskerJS v1.4 - Vanilla Javascript mask plugin to input form elements
+ * Copyright 2019-2025 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
 */
@@ -221,8 +221,10 @@
             }
             let regex1 = new RegExp('(\\d{1,' + precision + '})$');
             let regex2 = new RegExp('(\\d{1,})(\\d{' + precision + '})');
-            let regex3 = new RegExp('(\\d{1,})(\\d{3})([\.\,])(\\d{' + precision + '})');
-            let regex4 = new RegExp('(\\d{1,})(\\d{3})([\.\,])(\\d{3})([\.\,])(\\d{' + precision + '})');
+            let regex3pt = new RegExp('(\\d{1,})(\\d{3})([\,])(\\d)');
+            let regex3en = new RegExp('(\\d{1,})(\\d{3})([\.])(\\d)');
+            let regex4pt = new RegExp('(\\d{1,})(\\d{3})([\.])(\\d{3})([\,])(\\d{' + precision + '})');
+            let regex4en = new RegExp('(\\d{1,})(\\d{3})([\,])(\\d{3})([\.\,])(\\d{' + precision + '})');
             
             switch (culture.toLowerCase()) {
                 case 'pt-br':
@@ -233,8 +235,8 @@
                         .replace(/\D/g, '')
                         .replace(regex1, '$1')
                         .replace(regex2, '$1,$2')
-                        .replace(regex3, '$1.$2$3$4')
-                        .replace(regex4, '$1.$2$3$4$5$6');
+                        .replace(regex3pt, '$1.$2$3$4')
+                        .replace(regex4pt, '$1.$2$3$4$5$6');
                     break;
                 default:
                     target.setAttribute('placeholder', '0.' + '0'.padEnd(precision, '0'));
@@ -244,8 +246,8 @@
                         .replace(/\D/g, '')
                         .replace(regex1, '$1')
                         .replace(regex2, '$1.$2')
-                        .replace(regex3, '$1,$2$3$4')
-                        .replace(regex4, '$1,$2$3$4$5$6');
+                        .replace(regex3en, '$1,$2$3$4')
+                        .replace(regex4en, '$1,$2$3$4$5$6');
                     break;
             }
             target.dataset.masked = true;
