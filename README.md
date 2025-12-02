@@ -5,7 +5,7 @@ Super lightweight plugin for masking _input_ form elements (<6kB minified).
 
 It currently supports the following mask types:
 * Brazilian CPF
-* Brazilian CNPJ
+* Brazilian CNPJ (numeric and alphanumeric)
 * Brazilian CEP (zip code)
 * Phone numbers (with area code and 8 or 9 digits of number)
 * Date
