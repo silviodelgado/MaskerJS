@@ -17,6 +17,7 @@ It currently supports the following mask types:
 * CreditCard (VISA, Mastercard, AMEX, Diners, Discover, Hipercard and Aura)
 * Number (pure)
 * Float
+* Float with precision
 * Percent
 
 ## Roadmap

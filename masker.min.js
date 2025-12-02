@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.4 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.4.1 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019-2025 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
