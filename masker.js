@@ -213,6 +213,10 @@
             let precision = parseInt(target.dataset.precision || '2');
             let firstTime = !(target.dataset.masked || false);            
             let value = target.value;
+            let negative = value.substr(0, 1) == '-';
+            if (negative) {
+                value = value.substr(1);
+            }
             while (value.length > 0 && (value.substring(0, 1) == '0' || value.substring(0, 1) == '.' || value.substring(0, 1) == ',')) {
                 value = value.substring(1);
             }
@@ -225,6 +229,8 @@
             let regex3en = new RegExp('(\\d{1,})(\\d{3})([\.])(\\d)');
             let regex4pt = new RegExp('(\\d{1,})(\\d{3})([\.])(\\d{3})([\,])(\\d{' + precision + '})');
             let regex4en = new RegExp('(\\d{1,})(\\d{3})([\,])(\\d{3})([\.\,])(\\d{' + precision + '})');
+            let regex5pt = new RegExp('(\\d{1,})(\\d{3})([\.])(\\d{3})([\.])(\\d{3})([\,])(\\d{' + precision + '})');
+            let regex5en = new RegExp('(\\d{1,})(\\d{3})([\,])(\\d{3})([\,])(\\d{3})([\.\,])(\\d{' + precision + '})');
             
             switch (culture.toLowerCase()) {
                 case 'pt-br':
@@ -236,7 +242,8 @@
                         .replace(regex1, '$1')
                         .replace(regex2, '$1,$2')
                         .replace(regex3pt, '$1.$2$3$4')
-                        .replace(regex4pt, '$1.$2$3$4$5$6');
+                        .replace(regex4pt, '$1.$2$3$4$5$6')
+                        .replace(regex5pt, '$1.$2$3$4$5$6$7$8');
                     break;
                 default:
                     target.setAttribute('placeholder', '0.' + '0'.padEnd(precision, '0'));
@@ -247,11 +254,12 @@
                         .replace(regex1, '$1')
                         .replace(regex2, '$1.$2')
                         .replace(regex3en, '$1,$2$3$4')
-                        .replace(regex4en, '$1,$2$3$4$5$6');
+                        .replace(regex4en, '$1,$2$3$4$5$6')
+                        .replace(regex5en, '$1,$2$3$4$5$6$7$8');
                     break;
             }
             target.dataset.masked = true;
-            return value;
+            return (negative ? '-' : '') + value;
         },
         percent: function (target) {
             let culture = target.dataset.culture || 'en-us';
