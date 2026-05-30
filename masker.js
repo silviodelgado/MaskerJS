@@ -1,5 +1,5 @@
 /*!
- * MaskerJS v1.4.1 - Vanilla Javascript mask plugin to input form elements
+ * MaskerJS v1.5.0 - Vanilla Javascript mask plugin to input form elements
  * Copyright 2019-2025 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
@@ -15,12 +15,16 @@
 })(typeof global !== "undefined" ? global : this.window || this.global, function (root) {
     'use strict';
 
-    String.prototype.replaceAll = function (find, replace) {
-        let str = this;
-        while (str.indexOf(find) >= 0) {
-            str = str.replace(find, replace);
+    const replaceAll = function (str, find, replace) {
+        if (!find) return str;
+        return str.split(find).join(replace);
+    };
+    
+    const getMask = (name) => {
+        if (Object.prototype.hasOwnProperty.call(masks, name) && typeof masks[name] === 'function') {
+            return masks[name];
         }
-        return str;
+        return null;
     };
 
     const masks = {
@@ -134,9 +138,9 @@
                     target.setAttribute('placeholder', '0,00');
                     value = (firstTime
                         ? parseFloat(value).toFixed(2).toString()
-                        : value.replaceAll('.', '').replace(',', '.'))
+                        : replaceAll(replaceAll(value, '.', ''), ',', '.'))
                         .replace(/\D/g, '')
-                        .replace(/(\d{1, 2})$/, '$1')
+                        .replace(/(\d{1,2})$/, '$1')
                         .replace(/(\d+)(\d{2})/, '$1,$2')
                         .replace(/(\d+)(\d{3})/, '$1.$2')
                         .replace(/(\d+)(\d{3})/, '$1.$2')
@@ -149,7 +153,7 @@
                         ? parseFloat(value).toFixed(2).toString()
                         : value.replace(',', '.'))
                         .replace(/\D/g, '')
-                        .replace(/(\d{1, 2})$/, '$1')
+                        .replace(/(\d{1,2})$/, '$1')
                         .replace(/(\d+)(\d{2})/, '$1.$2')
                         .replace(/(\d+)(\d{3})/, '$1,$2')
                         .replace(/(\d+)(\d{3})/, '$1,$2')
@@ -175,7 +179,7 @@
                         .replace(/( \d{4})(\d)/, '$1 $2')
                         .replace(/( \d{4})(\d+?$)/, '$1 $2');
                 case '3':
-                    let second = result.length > 1 ? result.substring(1, 1) : '';
+                    let second = result.length > 1 ? result.substring(1, 2) : '';
                     if (second == '') return result;
                     switch (second) {
                         case '6':
@@ -210,7 +214,10 @@
         },
         float_plus: function (target) {
             let culture = target.dataset.culture || 'en-us';
-            let precision = parseInt(target.dataset.precision || '2');
+            let precision = parseInt(target.dataset.precision, 10);
+            if (!Number.isFinite(precision) || precision < 1 || precision > 10) {
+                precision = 2;
+            }
             let firstTime = !(target.dataset.masked || false);            
             let value = target.value;
             let negative = value.substr(0, 1) == '-';
@@ -263,10 +270,16 @@
         },
         percent: function (target) {
             let culture = target.dataset.culture || 'en-us';
-            let precision = parseInt(target.dataset.precision || '2');
+            let precision = parseInt(target.dataset.precision, 10);
+            if (!Number.isFinite(precision) || precision < 1 || precision > 10) {
+                precision = 2;
+            }
             let firstTime = !(target.dataset.masked || false);
-            let maxValue = parseFloat(target.dataset.max || '100.00');
-            target.setAttribute('maxlength', (4 + precision));
+            let maxValue = parseFloat(target.dataset.max);
+            if (!Number.isFinite(maxValue) || maxValue <= 0) {
+                maxValue = 100.00;
+            }
+            target.setAttribute('maxlength', (3 + precision + (precision > 0 ? 1 : 0)));
             let value = target.value;
             while (value.length > 0 && (value.substring(0, 1) == '0' || value.substring(0, 1) == '.' || value.substring(0, 1) == ',')) {
                 value = value.substring(1);
@@ -311,19 +324,23 @@
         document.querySelectorAll('input[data-mask]').forEach(($elem) => {
             if (!$elem.dataset.mask)
                 return false;
-            $elem.value = masks[$elem.dataset.mask] ? masks[$elem.dataset.mask]($elem) : $elem.value;
+            if ($elem.dataset.maskerInit) return;
+            $elem.dataset.maskerInit = 'true';
+            const maskFn = getMask($elem.dataset.mask);
+            if (!maskFn) return false;
+            $elem.value = maskFn($elem);
             $elem.addEventListener('input', (e) => {
                 if (e.data == null && e.target.value != '') {
                     e.target.value = e.target.value.substring(0, e.target.value.length);
                     return;
                 }
-                e.target.value = masks[$elem.dataset.mask](e.target);
+                e.target.value = maskFn(e.target);
             });
             $elem.addEventListener('blur', (e) => {
-                e.target.value = masks[$elem.dataset.mask](e.target);
+                e.target.value = maskFn(e.target);
             });
             $elem.addEventListener('keyup', (e) => {
-                e.target.value = masks[$elem.dataset.mask](e.target);
+                e.target.value = maskFn(e.target);
             });
             $elem.addEventListener('focus', (e) => {
                 $elem.select();
