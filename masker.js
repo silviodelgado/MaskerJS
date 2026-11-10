@@ -1,6 +1,6 @@
 /*!
- * MaskerJS v1.5.0 - Vanilla Javascript mask plugin to input form elements
- * Copyright 2019-2025 Silvio Delgado (https://github.com/silviodelgado)
+ * MaskerJS v1.6.0 - Vanilla Javascript mask plugin to input form elements
+ * Copyright 2019-2026 Silvio Delgado (https://github.com/silviodelgado)
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * https://github.com/silviodelgado/maskerjs
 */
@@ -113,6 +113,13 @@
                 .replace(/\D/g, '')
                 .replace(/(\d{2})(\d)/, '$1/$2')
                 .replace(/\/(\d{4})\d+?$/, '$1');
+        },
+        month_year2: function (target) {
+            if (target.value.length > 5) return target.value.substring(0, 5);
+            return target.value
+                .replace(/\D/g, '')
+                .replace(/(\d{2})(\d)/, '$1/$2')
+                .replace(/\/(\d{2})\d+?$/, '$1');
         },
         time: function (target) {
             return target.value
